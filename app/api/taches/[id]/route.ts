@@ -4,7 +4,7 @@ import { updateTache, db } from '@/lib/db';
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await getSession();
@@ -16,7 +16,7 @@ export async function PUT(
       );
     }
 
-    const { id } = params;
+    const { id } = await params;
     const data = await request.json();
 
     const tache = db.taches.find(t => t.id === id);
